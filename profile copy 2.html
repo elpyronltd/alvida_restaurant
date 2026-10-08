@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Profile & Authentication - Alvida</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for High-End Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Tailwind Configuration matching index.html standards -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        alvida: {
+                            orange: '#ff7e00',
+                            darkOrange: '#d46900',
+                            charcoal: '#0B0C10',
+                            deepGray: '#15161b',
+                            gold: '#D4AF37',
+                            softWhite: '#FDFDFD',
+                            textDark: '#121212',
+                            textLight: '#E8E8E8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Modern custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #0B0C10;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ff7e00;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d46900;
+        }
+
+        /* Ambient floating light glows */
+        .ambient-glow-1 {
+            background: radial-gradient(circle, rgba(255, 126, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .dark .ambient-glow-1 {
+            background: radial-gradient(circle, rgba(255, 126, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .ambient-glow-2 {
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .dark .ambient-glow-2 {
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        /* Animated background mesh */
+        @keyframes subtleMovement {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            50% {
+                transform: translate(40px, -60px) scale(1.15);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-mesh-1 {
+            animation: subtleMovement 18s infinite alternate ease-in-out;
+        }
+
+        .animate-mesh-2 {
+            animation: subtleMovement 24s infinite alternate-reverse ease-in-out;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-alvida-softWhite text-alvida-textDark dark:bg-alvida-charcoal dark:text-alvida-textLight font-sans overflow-x-hidden min-h-screen relative transition-colors duration-300">
+
+    <!-- Ambient Background Blobs -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full ambient-glow-1 animate-mesh-1"></div>
+        <div class="absolute -bottom-40 -right-40 w-[600px] h-[600px] rounded-full ambient-glow-2 animate-mesh-2"></div>
+        <div class="absolute top-1/2 left-1/3 w-[500px] h-[500px] rounded-full ambient-glow-1 opacity-60"></div>
+    </div>
+
+    <!-- Header / Navigation Bar with Theme Toggler integrated -->
+    <header
+        class="relative z-10 w-full border-b border-gray-200 dark:border-gray-800/80 bg-white/95 dark:bg-alvida-charcoal/90 backdrop-blur-md transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo element matching brand standards -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center gap-1.5 group">
+                        <span
+                            class="text-alvida-orange font-serif font-extrabold text-2xl sm:text-3xl tracking-widest transition-transform group-hover:scale-105 duration-300">
+                            ALVÍDA
+                        </span>
+                        <div class="w-2 h-2 bg-alvida-orange rounded-full animate-bounce"></div>
+                    </a>
+                </div>
+
+                <!-- Center Brand Pill -->
+                <div
+                    class="hidden md:flex items-center gap-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full px-4 py-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300">
+                    <i class="fa-solid fa-crown text-alvida-orange"></i>
+                    <span>Sovereign Executive Portal</span>
+                </div>
+
+                <!-- Back to Main Site & Theme Switcher -->
+                <div class="flex items-center gap-6">
+                    <!-- Light / Dark Theme Switching trigger -->
+                    <button onclick="toggleTheme()"
+                        class="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+                        aria-label="Toggle Theme Mode">
+                        <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
+
+                    <a href="index.html"
+                        class="text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-alvida-orange dark:hover:text-alvida-orange transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Main Portal</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main
+        class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 min-h-[calc(100vh-80px)] flex flex-col justify-center">
+
+        <!-- VIEW 1: AUTHENTICATION (Login & Signup Interface) -->
+        <section id="authView" class="w-full max-w-md mx-auto hidden transition-all duration-300">
+
+            <!-- Combined Brand Card -->
+            <div
+                class="bg-white dark:bg-alvida-deepGray/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl relative overflow-hidden border border-gray-200 dark:border-alvida-orange/10 transition-colors duration-300">
+                <!-- Golden edge bar -->
+                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-alvida-orange to-alvida-gold"></div>
+
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white tracking-wide"
+                        id="authTitle">Welcome Back</h2>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-2" id="authSubtitle">Identify with your
+                        executive credentials</p>
+                </div>
+
+                <!-- Auth Navigation Mode Tab Switches -->
+                <div
+                    class="grid grid-cols-2 bg-gray-100 dark:bg-white/5 rounded-2xl p-1 mb-6 border border-gray-200 dark:border-white/10">
+                    <button onclick="toggleAuthMode(true)" id="tabLogin"
+                        class="py-2.5 text-sm font-bold rounded-xl transition duration-300 bg-alvida-orange text-white shadow-sm">
+                        Sign In
+                    </button>
+                    <button onclick="toggleAuthMode(false)" id="tabSignup"
+                        class="py-2.5 text-sm font-bold rounded-xl transition duration-300 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        Sign Up
+                    </button>
+                </div>
+
+                <!-- Google Authentication Trigger -->
+                <button onclick="handleGoogleSignIn()"
+                    class="w-full bg-white dark:bg-white hover:bg-gray-100 text-gray-900 font-bold py-3.5 px-6 rounded-2xl transition duration-300 shadow-lg border border-gray-200 dark:border-transparent flex items-center justify-center gap-3 mb-6 group">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path fill="#34A853"
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                        <path fill="#FBBC05"
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.87-2.6-2.86-4.53-6.16-4.53z" />
+                        <path fill="#EA4335"
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                    </svg>
+                    <span class="text-sm font-semibold">Sign in with Google</span>
+                </button>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex-1 h-px bg-gray-200 dark:bg-gray-800"></div>
+                    <span class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-widest font-bold">or use
+                        Email</span>
+                    <div class="flex-1 h-px bg-gray-200 dark:bg-gray-800"></div>
+                </div>
+
+                <!-- Form handler for Email Credentials -->
+                <form onsubmit="handleEmailAuth(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">OFFICIAL
+                            EMAIL</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-3.5 text-gray-400 dark:text-gray-500">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input required id="emailInput" type="email"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:border-alvida-orange text-gray-900 dark:text-white"
+                                placeholder="minister@state.gov">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">SECURE
+                            PASSWORD</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-3.5 text-gray-400 dark:text-gray-500">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input required id="passwordInput" type="password"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:border-alvida-orange text-gray-900 dark:text-white"
+                                placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <!-- Additional Name Field for Sign Up Mode only -->
+                    <div id="signUpNameField" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">SOVEREIGN
+                            NAME</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-3.5 text-gray-400 dark:text-gray-500">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </span>
+                            <input id="nameInput" type="text"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:border-alvida-orange text-gray-900 dark:text-white"
+                                placeholder="Hon. Elizabeth Vance">
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-alvida-orange hover:bg-alvida-darkOrange text-white font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg shadow-alvida-orange/20 mt-6 flex items-center justify-center gap-2">
+                        <span id="submitBtnText">Authenticate Executive</span>
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </button>
+                </form>
+            </div>
+
+        </section>
+
+        <!-- VIEW 2: PROFILE DASHBOARD (Authorized User Section) -->
+        <section id="profileView" class="w-full hidden transition-all duration-300 space-y-8">
+
+            <!-- Dashboard Upper Banner -->
+            <div
+                class="bg-white dark:bg-alvida-deepGray/80 backdrop-blur-md rounded-3xl p-8 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-gray-200 dark:border-alvida-orange/10 transition-colors duration-300">
+                <!-- Glow elements -->
+                <div class="absolute -top-12 -left-12 w-32 h-32 rounded-full bg-alvida-orange/10 blur-xl"></div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-6 relative z-10">
+                    <!-- User Profile Avatar with custom boundary glow -->
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-1 rounded-full bg-gradient-to-r from-alvida-orange to-alvida-gold opacity-75 blur">
+                        </div>
+                        <img id="userAvatar" src="https://placehold.co/150x150/0B0C10/ff7e00?text=A" alt="Avatar"
+                            class="relative w-24 h-24 rounded-full border-4 border-white dark:border-alvida-charcoal object-cover">
+                    </div>
+
+                    <div class="text-center sm:text-left space-y-2">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 bg-alvida-orange/10 rounded-full border border-alvida-orange/20">
+                            <i class="fa-solid fa-crown text-alvida-orange text-xs"></i>
+                            <span class="text-xs font-extrabold tracking-widest text-alvida-orange uppercase">Active
+                                Sovereign</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-gray-900 dark:text-white"
+                            id="userName">Sovereign Guest</h2>
+                        <p
+                            class="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center sm:justify-start gap-2">
+                            <i class="fa-solid fa-envelope text-alvida-orange"></i>
+                            <span id="userEmail">guest@state.gov</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sign out action -->
+                <div class="relative z-10 flex flex-col gap-2 w-full sm:w-auto">
+                    <button onclick="handleSignOut()"
+                        class="bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-white font-semibold py-3 px-6 rounded-xl border border-gray-200 dark:border-white/10 transition duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-sign-out-alt"></i>
+                        <span>Secure Logout</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content Split Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- Left Hand Side: Profile, Contact, and Location Management -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div
+                        class="bg-white dark:bg-alvida-deepGray/80 backdrop-blur-md rounded-3xl p-6 md:p-8 space-y-6 border border-gray-200 dark:border-alvida-orange/10 transition-colors duration-300">
+                        <div>
+                            <h3
+                                class="text-xl font-serif font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-user-gear text-alvida-orange"></i>
+                                <span>Security Credentials & Details</span>
+                            </h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Ensure your contact routing
+                                parameters are secure & accurate.</p>
+                        </div>
+
+                        <!-- User Update Profile Form -->
+                        <form onsubmit="handleUpdateProfile(event)" class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">EXECUTIVE
+                                    PHONE</label>
+                                <input required id="profilePhone" type="tel"
+                                    class="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange text-gray-900 dark:text-white"
+                                    placeholder="+1 (555) 019-2831">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">SECURED
+                                    PLAZA / ADDRESS</label>
+                                <textarea required id="profileAddress"
+                                    class="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange text-gray-900 dark:text-white h-24"
+                                    placeholder="Room 402, State Capitol Executive Plaza, Diplomatic Boulevard"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">DIETARY
+                                    / ALLERGEN SAFETY INSTRUCTIONS</label>
+                                <textarea id="profileAllergen"
+                                    class="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange text-gray-900 dark:text-white h-20"
+                                    placeholder="E.g., High-security routing only, gluten restrictions, zero mushroom extract..."></textarea>
+                            </div>
+
+                            <!-- Save / Sync indicators -->
+                            <div class="flex items-center justify-between pt-2">
+                                <div id="syncStatus"
+                                    class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>Fully synced with Cloud Vault</span>
+                                </div>
+                                <button type="submit"
+                                    class="bg-alvida-orange hover:bg-alvida-darkOrange text-white font-bold py-2.5 px-6 rounded-xl transition duration-300 text-xs shadow-md shadow-alvida-orange/15">
+                                    Update Details
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Hand Side: Sovereign Order History -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div
+                        class="bg-white dark:bg-alvida-deepGray/80 backdrop-blur-md rounded-3xl p-6 md:p-8 space-y-6 border border-gray-200 dark:border-alvida-orange/10 transition-colors duration-300">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <div>
+                                <h3
+                                    class="text-xl font-serif font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-clock-rotate-left text-alvida-orange"></i>
+                                    <span>Cabinet Order Registry</span>
+                                </h3>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Registry of past and real-time
+                                    elite dinner provisions.</p>
+                            </div>
+                            <span
+                                class="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
+                                High-Security Escort Delivery
+                            </span>
+                        </div>
+
+                        <!-- Orders Dynamic Container -->
+                        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-2" id="ordersContainer">
+                            <!-- In-memory or dynamic loaded orders will load here -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Structure matching the brand of Alvida -->
+    <footer
+        class="bg-gray-100 dark:bg-alvida-charcoal text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-900 mt-20 relative z-10 py-8 text-center text-xs transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p>&copy; 2026 Alvida Fine Art Culinary. All Sovereigns Reserved.</p>
+            <div class="flex justify-center gap-6 mt-3">
+                <a href="#" class="hover:underline">Diplomatic Security Guidelines</a>
+                <a href="#" class="hover:underline">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Alert Box System -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Firebase Script Integrations -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            signInAnonymously,
+            signInWithCustomToken,
+            onAuthStateChanged,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            signOut,
+            updateProfile
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            updateDoc,
+            collection,
+            query,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Web Config with fallback definitions for cross-compiles
+        const firebaseConfig = typeof __firebase_config !== 'undefined'
+            ? JSON.parse(__firebase_config)
+            : {
+                apiKey: "AIzaSyCTPY28gYNHV6TS_YVafSGneXvTvb7ryMA",
+                authDomain: "jendarestaurant.firebaseapp.com",
+                projectId: "jendarestaurant",
+                storageBucket: "jendarestaurant.firebasestorage.app",
+                messagingSenderId: "518545519468",
+                appId: "1:518545519468:web:cc09a476b011f1a379b949",
+                measurementId: "G-RCLGV4BLMS"
+            };
+
+        // Initialize App & Products
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // State Trackers
+        let isLogin = true;
+        let currentUser = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'jendarestaurant';
+
+        // Mock orders designed matching high-profile restaurant menu choices
+        const mockOrders = [
+            { id: "ALV-91029", date: "June 18, 2026", items: "2x Alvida Mixed Grill, 1x The Sovereign Elixir", total: "68.98", status: "Delivered to Cabinet Office" },
+            { id: "ALV-89401", date: "June 12, 2026", items: "1x Grilled Salmon, 1x Statehouse Mocktail", total: "36.99", status: "Delivered to VIP Suite" },
+            { id: "ALV-82194", date: "May 29, 2026", items: "4x Truffle Pasta, 4x Cabinet Mimosa", total: "141.96", status: "Completed Strategy Luncheon" }
+        ];
+
+        // Theme management logic aligned with main index page
+        window.toggleTheme = function () {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('alvida-theme', 'light');
+                updateThemeToggleIcon();
+                showToast("Crisp Executive Light Mode Engaged.");
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('alvida-theme', 'dark');
+                updateThemeToggleIcon();
+                showToast("Luxury Dark Mode Engaged. Welcome, Sovereign.");
+            }
+        }
+
+        function updateThemeToggleIcon() {
+            const icon = document.getElementById('themeIcon');
+            if (icon) {
+                if (document.documentElement.classList.contains('dark')) {
+                    icon.className = 'fa-solid fa-sun text-lg';
+                } else {
+                    icon.className = 'fa-solid fa-moon text-lg';
+                }
+            }
+        }
+
+        // Initialize Theme preference from Local Storage
+        if (localStorage.getItem('alvida-theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        updateThemeToggleIcon();
+
+        // Main Auth state observer
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('authView').classList.add('hidden');
+                document.getElementById('profileView').classList.remove('hidden');
+
+                // Set UI details
+                document.getElementById('userName').innerText = user.displayName || 'Sovereign Guest';
+                document.getElementById('userEmail').innerText = user.email || 'No email provided';
+                if (user.photoURL) {
+                    document.getElementById('userAvatar').src = user.photoURL;
+                } else {
+                    document.getElementById('userAvatar').src = `https://placehold.co/150x150/0B0C10/ff7e00?text=${(user.displayName || 'A').charAt(0)}`;
+                }
+
+                showToast(`Welcome, ${user.displayName || 'Sovereign Guest'}! VIP Session active.`);
+
+                // Fetch dynamic Contact and Location from firestore
+                await loadSovereignProfile();
+                renderMockOrders();
+            } else {
+                currentUser = null;
+                document.getElementById('profileView').classList.add('hidden');
+                document.getElementById('authView').classList.remove('hidden');
+            }
+        });
+
+        // Toggle authentication mode switcher (Login vs Signup)
+        window.toggleAuthMode = function (loginMode) {
+            isLogin = loginMode;
+
+            const title = document.getElementById('authTitle');
+            const subtitle = document.getElementById('authSubtitle');
+            const tabLogin = document.getElementById('tabLogin');
+            const tabSignup = document.getElementById('tabSignup');
+            const nameField = document.getElementById('signUpNameField');
+            const nameInput = document.getElementById('nameInput');
+            const submitText = document.getElementById('submitBtnText');
+
+            if (isLogin) {
+                title.innerText = "Welcome Back";
+                subtitle.innerText = "Identify with your executive credentials";
+                tabLogin.className = "py-2.5 text-sm font-bold rounded-xl transition duration-300 bg-alvida-orange text-white shadow-sm";
+                tabSignup.className = "py-2.5 text-sm font-bold rounded-xl transition duration-300 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white";
+                nameField.classList.add('hidden');
+                nameInput.removeAttribute('required');
+                submitText.innerText = "Authenticate Executive";
+            } else {
+                title.innerText = "Register Credentials";
+                subtitle.innerText = "Establish your secure presidential seat";
+                tabLogin.className = "py-2.5 text-sm font-bold rounded-xl transition duration-300 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white";
+                tabSignup.className = "py-2.5 text-sm font-bold rounded-xl transition duration-300 bg-alvida-orange text-white shadow-sm";
+                nameField.classList.remove('hidden');
+                nameInput.setAttribute('required', 'true');
+                submitText.innerText = "Create Sovereign Account";
+            }
+        }
+
+        // Handle Google OAuth Action
+        window.handleGoogleSignIn = async function () {
+            try {
+                showToast("Contacting Google OAuth servers...");
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error("Google Auth Failure: ", error);
+                showToast(`OAuth Issue: ${error.message}`, true);
+            }
+        }
+
+        // Handle normal Email/Password auth logic (both Sign in & Sign up)
+        window.handleEmailAuth = async function (event) {
+            event.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const name = document.getElementById('nameInput').value;
+
+            try {
+                if (isLogin) {
+                    showToast("Securing server connection...");
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    showToast("Creating secure credential block...");
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // Update username profile details
+                    await updateProfile(userCredential.user, {
+                        displayName: name
+                    });
+                    // Refresh auth tracking manually
+                    location.reload();
+                }
+            } catch (error) {
+                console.error("Authentication Error:", error);
+                showToast(`Credential Error: ${error.message}`, true);
+            }
+        }
+
+        // Secure Logout Handler
+        window.handleSignOut = async function () {
+            try {
+                showToast("Disassociating VIP security session...");
+                await signOut(auth);
+            } catch (error) {
+                showToast("Logout problem. Please try again.", true);
+            }
+        }
+
+        // Load contact details from Firestore under strict path RULE 1
+        async function loadSovereignProfile() {
+            if (!currentUser) return;
+
+            const syncStatus = document.getElementById('syncStatus');
+            syncStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Querying secure database...</span>`;
+
+            try {
+                // Rule 1: /artifacts/{appId}/users/{userId}/{collectionName}
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'profile', 'userData');
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('profilePhone').value = data.phone || '';
+                    document.getElementById('profileAddress').value = data.address || '';
+                    document.getElementById('profileAllergen').value = data.allergen || '';
+                    syncStatus.innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-emerald-500"></i> <span class="text-emerald-600 dark:text-emerald-400 font-bold">Synced to Alvida Cloud Vault</span>`;
+                } else {
+                    syncStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-500"></i> <span class="text-amber-600 dark:text-amber-500">Unconfigured Profile Block</span>`;
+                }
+            } catch (err) {
+                console.error("Firestore retrieval error: ", err);
+                syncStatus.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-500"></i> <span class="text-red-500">Sync Offline</span>`;
+            }
+        }
+
+        // Update profile in database under strict path RULE 1
+        window.handleUpdateProfile = async function (event) {
+            event.preventDefault();
+            if (!currentUser) {
+                showToast("Unauthorized transaction request.", true);
+                return;
+            }
+
+            const phone = document.getElementById('profilePhone').value;
+            const address = document.getElementById('profileAddress').value;
+            const allergen = document.getElementById('profileAllergen').value;
+            const syncStatus = document.getElementById('syncStatus');
+
+            syncStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Writing details to Cloud Vault...</span>`;
+
+            try {
+                // Rule 1: /artifacts/{appId}/users/{userId}/{collectionName}
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'profile', 'userData');
+                await setDoc(docRef, {
+                    phone,
+                    address,
+                    allergen,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+
+                showToast("Details updated with executive security encryption.");
+                syncStatus.innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-emerald-500"></i> <span class="text-emerald-600 dark:text-emerald-400 font-bold">Synced to Alvida Cloud Vault</span>`;
+            } catch (err) {
+                console.error("Firestore update issue: ", err);
+                showToast("Problem communicating with servers.", true);
+                syncStatus.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-500"></i> <span class="text-red-500">Failure Syncing Details</span>`;
+            }
+        }
+
+        // Render user order records with light/dark theme compliance
+        function renderMockOrders() {
+            const container = document.getElementById('ordersContainer');
+            if (!mockOrders || mockOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400 dark:text-gray-500">
+                        <i class="fa-solid fa-receipt text-3xl mb-2 block"></i>
+                        <p>No culinary provisioning on record.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            mockOrders.forEach(ord => {
+                html += `
+                    <div class="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:border-alvida-orange/20 dark:hover:border-alvida-orange/20 rounded-2xl p-5 space-y-3 transition duration-300">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <div class="space-y-0.5">
+                                <span class="text-xs uppercase tracking-widest text-alvida-orange font-bold">${ord.id}</span>
+                                <h4 class="text-sm font-bold text-gray-900 dark:text-white">${ord.date}</h4>
+                            </div>
+                            <span class="bg-alvida-orange/10 text-alvida-orange text-[10px] font-black uppercase px-2.5 py-1 rounded-md border border-alvida-orange/20">
+                                $${ord.total} Total
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">${ord.items}</p>
+                        <div class="flex items-center gap-2 pt-1 border-t border-gray-100 dark:border-white/5 text-[11px] text-gray-400 dark:text-gray-500">
+                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+                            <span>Status:</span>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">${ord.status}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Toast Center helper system matching theme styles dynamically
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            toast.className = `flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border text-sm font-bold transition duration-300 transform translate-y-4 opacity-0 pointer-events-auto max-w-sm ${isError
+                    ? 'bg-red-500 border-red-600 text-white'
+                    : 'bg-white dark:bg-alvida-deepGray border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white'
+                }`;
+
+            toast.innerHTML = `
+                <i class="fa-solid ${isError ? 'fa-triangle-exclamation text-red-400' : 'fa-circle-check text-alvida-orange'} text-lg"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 50);
+
+            // Animate Out
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3500);
+        }
+    </script>
+</body>
+
+</html>

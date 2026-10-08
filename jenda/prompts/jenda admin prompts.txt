@@ -1,0 +1,25 @@
+I'm building a restaurant platform that would allow users to place food others, drink orders, reserve tables, etc.
+
+I'm using PHP. The name of the database is "jenda_restaurant_db". 
+
+the colors are #ff7e00, charcoal black, and white.
+
+The adin page should have 6 tabs: Live Dashboard, Foods, Drinks, Order Dispatch, Chef Activities & Security. The uploaded picture is the structure of the "food" and "drinks" tables.
+
+The Live Dashboard tab should should be a dashbaord for him to see total number food varieties, total number of drink options, total number of orders, total orders today, total number of deliveries, total deliveries today.
+
+The food registry should allow him to see the differnt foods available in the tatabase. The foods should be sorted according to available categories.
+
+The drink registry should allow him to see the differnt drinks available in the tatabase. The drinks should be sorted according to available categories.    
+
+The admin too should be to see current orders. He should see the orders based on their group: preparing, ready, out_for_delivery, delivered, cancelled.  
+
+The admin would only oversee, he would not be able to change the status of the orders. The chef would be the one to change the status of the orders.
+
+The admin should be able to oversee chefs and their activities. In the Chef's Activities tab, he should be able to see the accounts of all the chefs, the number of orders fulfilled in a day, in a month and in a year.
+
+Admin should be able to update password as well as suspend a chef's account if need be.
+
+The structure of the orders table too is uploaded.
+
+Kindly also write the sql to update the "orders" table, to allow for "fulfilled_by" column, so we can know which chef fulfilled what order.

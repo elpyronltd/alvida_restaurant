@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alvida - The 5-Star Executive Experience</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for High-End Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Configuration for customized Alvida theme colors -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        alvida: {
+                            orange: '#FF5B00',
+                            darkOrange: '#E04F00',
+                            charcoal: '#0B0C10',
+                            deepGray: '#1A1D24',
+                            gold: '#D4AF37',
+                            softWhite: '#FDFDFD',
+                            textDark: '#121212',
+                            textLight: '#E8E8E8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+
+        /* Modern custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #0B0C10;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FF5B00;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E04F00;
+        }
+
+        /* Glassmorphism custom classes */
+        .glass-navbar {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .dark .glass-navbar {
+            background: rgba(11, 12, 16, 0.85);
+        }
+
+        /* Fluid/Liquid Pouring Transition Menu */
+        .pour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 90;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Liquid Wave Effect */
+        .liquid-wave {
+            position: absolute;
+            top: -110%;
+            left: 0;
+            width: 100%;
+            height: 110%;
+            background: linear-gradient(180deg, #FF5B00 0%, #D44100 70%, #9E1B00 100%);
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+            transition: all 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 1;
+        }
+
+        /* Secondary liquid wave layer for depth */
+        .liquid-wave-back {
+            position: absolute;
+            top: -110%;
+            left: 0;
+            width: 100%;
+            height: 112%;
+            background: linear-gradient(180deg, #FF7E33 0%, #E04F00 100%);
+            border-bottom-left-radius: 45% 18%;
+            border-bottom-right-radius: 45% 18%;
+            transition: all 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 0;
+            opacity: 0.7;
+        }
+
+        .pour-overlay.active {
+            pointer-events: auto;
+        }
+
+        .pour-overlay.active .liquid-wave {
+            top: 0;
+            border-bottom-left-radius: 0% 0%;
+            border-bottom-right-radius: 0% 0%;
+        }
+
+        .pour-overlay.active .liquid-wave-back {
+            top: 0;
+            border-bottom-left-radius: 0% 0%;
+            border-bottom-right-radius: 0% 0%;
+        }
+
+        /* Pouring glass bubbles & stream effect */
+        .pour-stream {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 0;
+            background: #FFE3D1;
+            box-shadow: 0 0 15px #FF5B00;
+            opacity: 0;
+            z-index: 2;
+            transition: height 0.4s ease, opacity 0.2s ease;
+        }
+
+        .pour-overlay.active .pour-stream {
+            height: 100%;
+            opacity: 1;
+            animation: fadeOutStream 0.6s forwards 0.4s;
+        }
+
+        @keyframes fadeOutStream {
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Interactive floating items */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-6px);
+        }
+
+        /* Spinning plate animations */
+        @keyframes subtleSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spin-plate {
+            animation: subtleSpin 80s linear infinite;
+        }
+
+        /* Pulse orange circle */
+        @keyframes wavePulse {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.5;
+            }
+        }
+
+        .pulse-circle {
+            animation: wavePulse 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-alvida-softWhite text-alvida-textDark dark:bg-alvida-charcoal dark:text-alvida-textLight transition-colors duration-300 font-sans overflow-x-hidden">
+
+
+    <!-- Shopping Cart Drawer Overlay -->
+    <div id="cartDrawer"
+        class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div
+            class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-alvida-deepGray shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+            <div
+                class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-alvida-charcoal">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-utensils text-alvida-orange text-lg"></i>
+                    <h3 class="font-bold text-lg dark:text-white">Your Selection Drawer</h3>
+                </div>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-alvida-orange transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items Container -->
+            <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Dynamically loaded via Javascript -->
+                <div class="text-center py-12 text-gray-400 dark:text-gray-500">
+                    <i class="fa-solid fa-basket-shopping text-4xl mb-3 block"></i>
+                    <p>No delicious executive items selected yet.</p>
+                </div>
+            </div>
+
+            <div class="p-6 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-alvida-charcoal space-y-4">
+                <div class="flex justify-between font-bold text-lg dark:text-white">
+                    <span>Subtotal:</span>
+                    <span id="cartTotalSum">$0.00</span>
+                </div>
+                <button onclick="checkoutOrder()"
+                    class="w-full bg-alvida-orange hover:bg-alvida-darkOrange text-white font-bold py-3.5 px-6 rounded-xl transition duration-300 shadow-lg shadow-alvida-orange/20 flex items-center justify-center gap-2">
+                    <span>Secure Checkout</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking / Reservation Overlay Modal -->
+    <div id="reserveModal"
+        class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white dark:bg-alvida-deepGray rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden transition-all transform scale-95 duration-300">
+            <div
+                class="bg-gradient-to-r from-alvida-orange to-amber-600 p-6 text-white flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-bold font-serif">Reserve Your Sovereign Table</h3>
+                    <p class="text-xs text-orange-100 mt-1">Beloved choice of Statesmen</p>
+                </div>
+                <button onclick="toggleReserveModal()"
+                    class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form onsubmit="handleReservationSubmit(event)" class="p-8 space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">FULL
+                            NAME</label>
+                        <input required type="text"
+                            class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white"
+                            placeholder="Hon. Arthur Pendelton">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">PHONE
+                            NUMBER</label>
+                        <input required type="tel"
+                            class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white"
+                            placeholder="+1 (555) 019-2831">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">DATE</label>
+                        <input required type="date"
+                            class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">TIME
+                            SLOT</label>
+                        <select
+                            class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white">
+                            <option>06:00 PM</option>
+                            <option>07:30 PM</option>
+                            <option>08:45 PM</option>
+                            <option>10:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">GUESTS</label>
+                        <select
+                            class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white">
+                            <option>1 Sovereign Guest</option>
+                            <option selected>2 Guests</option>
+                            <option>4 Guests</option>
+                            <option>6+ (Cabinet Meeting)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">SPECIAL
+                        PREFERENCES</label>
+                    <textarea
+                        class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white h-20"
+                        placeholder="E.g., High-security detail routing, private VIP enclave, specific allergen guidelines..."></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-alvida-orange hover:bg-alvida-darkOrange text-white font-bold py-3.5 rounded-xl transition duration-300 shadow-lg shadow-alvida-orange/20">
+                    Confirm Royal Seating
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cinematic Video Modal -->
+    <div id="storyModal" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
+            <button onclick="toggleStoryModal()"
+                class="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 p-2 rounded-full transition text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <!-- Simulated luxury video presentation playing inside -->
+            <div
+                class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-gradient-to-b from-transparent to-black/80">
+                <div class="text-alvida-orange mb-4 text-5xl">
+                    <i class="fa-solid fa-clapperboard"></i>
+                </div>
+                <h2 class="text-3xl font-serif text-white font-bold mb-2">Alvida: The State Sovereign Experience</h2>
+                <p class="text-gray-300 max-w-md text-sm mb-6">Take an exclusive look inside our private cabinet dining
+                    lounges and fine art culinary laboratories with Head Executive Chef Marcel D'Angelo.</p>
+                <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-alvida-orange h-full rounded-full transition-all duration-[8000ms] w-0"
+                        id="videoProgress"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">Streaming High-Definition 5-Star B-Roll...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liquid Pour Navigation Overlay Mobile -->
+    <div id="pourNavMenu" class="pour-overlay flex items-center justify-center">
+        <!-- Pouring liquor stream effect -->
+        <div class="pour-stream"></div>
+        <!-- Wave background liquid colors -->
+        <div class="liquid-wave-back"></div>
+        <div class="liquid-wave"></div>
+
+        <!-- Menu Items (layered dynamically over the waves) -->
+        <div
+            class="relative z-10 text-center text-white px-6 opacity-0 translate-y-8 transition-all duration-700 delay-300 flex flex-col space-y-6 max-h-screen overflow-y-auto">
+            <div class="flex justify-center mb-4">
+                <img src="white_logo.png" alt="Alvida Logo" class="h-6">
+            </div>
+            <a href="#home" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">HOME</a>
+            <a href="#executive" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">THE EXECUTIVE
+                EXPERIENCE</a>
+            <a href="#menu" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">OUR MENU</a>
+            <a href="#drinks" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">FEATURED DRINKS</a>
+            <a href="#gallery" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">WALK INTO ALVIDA</a>
+            <a href="#reserve" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">RESERVATIONS</a>
+            <a href="#contact" onclick="triggerMobileNavMenu()"
+                class="text-2xl font-semibold tracking-wide hover:text-amber-200 transition">CONTACT</a>
+
+            <div class="pt-6 border-t border-white/20 flex flex-col gap-4 items-center justify-center">
+                <button onclick="toggleReserveModal(); triggerMobileNavMenu();"
+                    class="bg-white text-alvida-orange font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-orange-50 transition w-64">
+                    Reserve Seating
+                </button>
+                <button onclick="toggleCart(); triggerMobileNavMenu();"
+                    class="border-2 border-white/80 font-bold px-8 py-3 rounded-xl hover:bg-white/15 transition w-64 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span>Order Food Online</span>
+                </button>
+            </div>
+            <button onclick="triggerMobileNavMenu()"
+                class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 p-3 rounded-full transition">
+                <i class="fa-solid fa-xmark text-2xl text-white"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Dynamic Toast Notification Center -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <header id="home"
+        class="sticky top-0 z-40 w-full glass-navbar border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+
+                <!-- Logo element exactly matching wireframe 'ALVIDA' -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#home" class="flex items-center gap-1.5 group">
+                        <img src="logo.png" alt="Alvida Logo" class="h-6 ">
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation Menu (Matching Wireframe Desktop Homepage layout) -->
+                <nav class="hidden lg:flex space-x-8 items-center">
+                    <a href="#home" class="text-sm font-semibold text-alvida-orange tracking-wider relative group py-2">
+                        HOME
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-alvida-orange rounded-full"></span>
+                    </a>
+                    <a href="#menu"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-alvida-orange tracking-wider transition relative group py-2">
+                        MENU
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-alvida-orange rounded-full transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#reserve"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-alvida-orange tracking-wider transition relative group py-2">
+                        RESERVATIONS
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-alvida-orange rounded-full transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#menu"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-alvida-orange tracking-wider transition relative group py-2">
+                        ORDER ONLINE
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-alvida-orange rounded-full transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#executive"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-alvida-orange tracking-wider transition relative group py-2">
+                        PRIVATE DINING
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-alvida-orange rounded-full transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#gallery"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-alvida-orange tracking-wider transition relative group py-2">
+                        ABOUT US
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-alvida-orange rounded-full transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-alvida-orange tracking-wider transition relative group py-2">
+                        CONTACT
+                    </a>
+                </nav>
+
+                <!-- Header Actions (Cart, Switch Mode, Sign-in, Call) -->
+                <div class="flex items-center gap-4">
+
+                    <!-- Dark/Light Theme Toggle -->
+                    <button onclick="toggleTheme()"
+                        class="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                        aria-label="Toggle Theme Mode">
+                        <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
+
+                    <!-- Cart Icon with dynamic counter badges -->
+                    <button onclick="toggleCart()"
+                        class="relative p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cartCountBadge"
+                            class="absolute -top-1 -right-1 bg-alvida-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-white dark:border-alvida-charcoal animate-pulse">
+                            2
+                        </span>
+                    </button>
+
+                    <!-- Sign-in Button exactly as seen on Wireframes -->
+                    <button onclick="openSignIn()"
+                        class="hidden sm:inline-block border border-alvida-orange text-alvida-orange hover:bg-alvida-orange hover:text-white font-semibold text-xs py-2 px-5 rounded-md transition duration-300">
+                        <a href="profile.html">SIGN IN</a>
+                    </button>
+
+                    <!-- Mobile burger toggle, which triggers pouring drink overlay animation -->
+                    <button onclick="triggerMobileNavMenu()"
+                        class="lg:hidden p-2 rounded-xl text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative">
+
+        <!-- Banner Welcome Background decoration for elite look -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
+            <div class="absolute top-1/4 -right-20 w-96 h-96 rounded-full bg-orange-100 dark:bg-orange-950/20 blur-3xl">
+            </div>
+            <div class="absolute top-1/2 -left-20 w-96 h-96 rounded-full bg-amber-100 dark:bg-amber-950/20 blur-3xl">
+            </div>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 lg:py-24 z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                <!-- Left Content: Typography & Action Triggers -->
+                <div class="lg:col-span-6 space-y-6 md:space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2">
+                        <span
+                            class="text-xs uppercase font-extrabold tracking-[0.25em] text-alvida-orange border-b border-alvida-orange pb-1">
+                            WELCOME TO ALVIDA
+                        </span>
+                        <span class="flex h-2 w-2 relative">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-alvida-orange opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-alvida-orange"></span>
+                        </span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight font-sans leading-none">
+                        <span class="block text-gray-900 dark:text-white">EXPERIENCE</span>
+                        <span class="block text-alvida-orange mt-2">EXTRAORDINARY</span>
+                    </h1>
+
+                    <p
+                        class="text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                        Alvida is where exquisite flavors, impeccable service, and modern elegance come together to
+                        create unforgettable dining moments. The choice setting of governors, prominent cabinet members,
+                        and state dignitaries.
+                    </p>
+
+                    <!-- Interactive CTAs exactly matching visual wireframe shapes -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+                        <button onclick="toggleReserveModal()"
+                            class="w-full sm:w-auto bg-alvida-orange hover:bg-alvida-darkOrange text-white font-semibold py-4 px-8 rounded-xl transition duration-300 shadow-lg shadow-alvida-orange/20 flex items-center justify-center gap-2">
+                            <span>RESERVE A TABLE</span>
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </button>
+
+                        <a href="#menu"
+                            class="w-full sm:w-auto border border-alvida-orange hover:bg-orange-50 dark:hover:bg-orange-950/20 text-alvida-orange font-semibold py-4 px-8 rounded-xl transition duration-300 text-center flex items-center justify-center gap-2">
+                            <span>ORDER ONLINE</span>
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </a>
+                    </div>
+
+                    <!-- Story Play trigger matching the custom video play element in layouts -->
+                    <div class="flex justify-center lg:justify-start pt-2">
+                        <button onclick="toggleStoryModal()"
+                            class="inline-flex items-center gap-3 group text-sm font-bold text-gray-700 dark:text-gray-300 hover:text-alvida-orange transition">
+                            <span
+                                class="w-12 h-12 rounded-full border border-alvida-orange flex items-center justify-center text-alvida-orange bg-white dark:bg-alvida-deepGray shadow-md group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </span>
+                            <span class="tracking-widest uppercase">WATCH OUR STORY</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Visual: The Signature Crown Plate floating elegantly -->
+                <div class="lg:col-span-6 relative flex justify-center">
+
+                    <!-- Decorative back-ring glow representing elite executive status -->
+                    <div
+                        class="absolute w-[80%] aspect-square rounded-full border-2 border-dashed border-gray-200 dark:border-gray-800 pulse-circle opacity-80 z-0">
+                    </div>
+
+                    <div class="relative w-full max-w-[480px] z-10 hover-lift">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80"
+                            alt="Sovereign Prime Rack of Lamb"
+                            class="rounded-full shadow-2xl border-4 border-white dark:border-alvida-deepGray w-full aspect-square object-cover spin-plate"
+                            onerror="this.src='https://placehold.co/800x800/ff5b00/ffffff?text=Alvida+Gourmet+Lamb'">
+
+                        <!-- Mini interactive detail card overlay on float -->
+                        <div
+                            class="absolute bottom-4 right-4 bg-white/95 dark:bg-alvida-deepGray/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-orange-100 dark:border-gray-800 max-w-xs text-left animate-bounce duration-1000">
+                            <div class="flex items-center gap-1 text-amber-500 mb-1">
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                            </div>
+                            <h4 class="font-bold text-sm dark:text-white">Award-Winning State Plate</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Imported Rack of Lamb with
+                                truffled reduction.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section
+            class="bg-gray-50 dark:bg-alvida-deepGray border-y border-gray-100 dark:border-gray-800 transition duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                    <!-- Item 1: Cuisine -->
+                    <div class="flex items-center gap-4 p-4 hover:scale-105 transition-transform duration-200">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-50 dark:bg-alvida-charcoal flex items-center justify-center text-alvida-orange text-xl">
+                            <i class="fa-solid fa-bowl-food"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wide dark:text-white">EXQUISITE CUISINE</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">A blend of traditional flavors and
+                                modern culinary innovation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Ambience -->
+                    <div class="flex items-center gap-4 p-4 hover:scale-105 transition-transform duration-200">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-50 dark:bg-alvida-charcoal flex items-center justify-center text-alvida-orange text-xl">
+                            <i class="fa-solid fa-chair"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wide dark:text-white">ELEGANT AMBIENCE</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Sophisticated spaces designed for
+                                unforgettable experiences.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: Reservations -->
+                    <div class="flex items-center gap-4 p-4 hover:scale-105 transition-transform duration-200">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-50 dark:bg-alvida-charcoal flex items-center justify-center text-alvida-orange text-xl">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wide dark:text-white">EASY RESERVATIONS</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Book your table online in just a
+                                few simple clicks.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Delivery -->
+                    <div class="flex items-center gap-4 p-4 hover:scale-105 transition-transform duration-200">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-50 dark:bg-alvida-charcoal flex items-center justify-center text-alvida-orange text-xl">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wide dark:text-white">FAST DELIVERY</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Enjoy your favorite dishes
+                                delivered hot and fresh to your door.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="executive" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left Visuals: Executive lounge imagery -->
+                <div class="relative order-2 lg:order-1">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img class="rounded-2xl shadow-lg w-full h-64 object-cover"
+                            src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=600&q=80"
+                            alt="Private Lounge VIP"
+                            onerror="this.src='https://placehold.co/600x600/121212/ffffff?text=Executive+Lounge'">
+                        <img class="rounded-2xl shadow-lg w-full h-64 object-cover mt-8"
+                            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80"
+                            alt="Premium Dining Prep"
+                            onerror="this.src='https://placehold.co/600x600/ff5b00/ffffff?text=Luxury+Plate'">
+                    </div>
+
+                    <!-- Decorative overlay seal -->
+                    <div
+                        class="absolute -top-6 -left-6 bg-amber-500 dark:bg-amber-600 text-white rounded-2xl p-4 shadow-xl text-center flex flex-col items-center justify-center transform -rotate-12">
+                        <span class="text-2xl font-extrabold font-serif">5★</span>
+                        <span class="text-[10px] uppercase tracking-wider font-bold">STATE SOVEREIGN</span>
+                    </div>
+                </div>
+
+                <!-- Right Content detailing elite choice of ministers -->
+                <div class="space-y-6 order-1 lg:order-2">
+                    <div class="inline-flex items-center gap-2">
+                        <span
+                            class="text-xs uppercase font-extrabold tracking-[0.25em] text-alvida-orange border-b border-alvida-orange pb-1">
+                            THE EXECUTIVE EXPERIENCE
+                        </span>
+                    </div>
+
+                    <h2
+                        class="text-3xl md:text-4xl font-extrabold font-sans leading-tight text-gray-900 dark:text-white">
+                        The Exclusive Sanctuary of Statesmen
+                    </h2>
+
+                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed">
+                        Alvida is recognized state-wide as the only true 5-star executive masterpiece. From intimate
+                        cabinet strategy dinners to celebrations marking key legislative bills, our rooms have safely
+                        welcomed leaders of state, international delegations, and the most prominent figures in society.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-950 flex items-center justify-center text-alvida-orange text-sm flex-shrink-0 mt-0.5">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white text-sm">State-of-the-Art Diplomatic
+                                    Privacy</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Soundproof structures and
+                                    separate secure entries designed specifically for diplomatic safety guidelines.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-950 flex items-center justify-center text-alvida-orange text-sm flex-shrink-0 mt-0.5">
+                                <i class="fa-solid fa-wine-glass-asterisk"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white text-sm">Private Reserve Vintage
+                                    Cellar</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Direct access to the state's
+                                    most exclusive vintage labels and custom tailored molecular cocktail mixology.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button onclick="toggleReserveModal()"
+                            class="bg-alvida-orange hover:bg-alvida-darkOrange text-white font-semibold py-3 px-8 rounded-xl transition duration-300 shadow-lg shadow-alvida-orange/15">
+                            Inquire for Private Lounge
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="menu" class="py-16 lg:py-24 bg-gray-50 dark:bg-alvida-deepGray transition duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Header with View Full Menu action -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div>
+                        <span class="text-xs uppercase font-extrabold tracking-[0.25em] text-alvida-orange block mb-2">
+                            POPULAR DISHES
+                        </span>
+                        <h2 class="text-3xl font-extrabold font-sans text-gray-900 dark:text-white">
+                            Sovereign Selections
+                        </h2>
+                    </div>
+
+                    <!-- Menu Category Filter Controls -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="filterMenu('all')"
+                            class="menu-tab-btn active bg-alvida-orange text-white text-xs font-bold py-2 px-4 rounded-lg transition"
+                            id="tab-all">
+                            All Cuisine
+                        </button>
+                        <button onclick="filterMenu('main')"
+                            class="menu-tab-btn bg-white dark:bg-alvida-charcoal text-gray-600 dark:text-gray-300 hover:text-alvida-orange text-xs font-bold py-2 px-4 rounded-lg transition"
+                            id="tab-main">
+                            Mains
+                        </button>
+                        <button onclick="filterMenu('sides')"
+                            class="menu-tab-btn bg-white dark:bg-alvida-charcoal text-gray-600 dark:text-gray-300 hover:text-alvida-orange text-xs font-bold py-2 px-4 rounded-lg transition"
+                            id="tab-sides">
+                            Starters / Sides
+                        </button>
+                        <button onclick="filterMenu('desserts')"
+                            class="menu-tab-btn bg-white dark:bg-alvida-charcoal text-gray-600 dark:text-gray-300 hover:text-alvida-orange text-xs font-bold py-2 px-4 rounded-lg transition"
+                            id="tab-desserts">
+                            Desserts
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Products Grid displaying cards exactly configured in ALVIDA MOBILE HOMEPAGE.png & DESKTOP -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="menuGrid">
+
+                    <!-- Food Item 1 -->
+                    <div class="menu-item-card bg-white dark:bg-alvida-charcoal rounded-3xl overflow-hidden shadow-md hover:shadow-xl hover-lift transition duration-300"
+                        data-category="main">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"
+                                alt="Alvida Mixed Grill" class="w-full h-56 object-cover"
+                                onerror="this.src='https://placehold.co/600x400/121212/ffffff?text=Mixed+Grill'">
+                            <!-- Plus Add Button exactly aligned top-right as shown in visual screenshots -->
+                            <button onclick="addToCart('Alvida Mixed Grill', 24.99)"
+                                class="absolute top-4 right-4 bg-alvida-orange hover:bg-alvida-darkOrange text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition transform active:scale-95"
+                                aria-label="Add Alvida Mixed Grill to Cart">
+                                <i class="fa-solid fa-plus text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg tracking-wide uppercase">ALVIDA
+                                MIXED GRILL</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                                A flavorful assortment of our finest grilled selections. Chosen frequently for cabinet
+                                gatherings.
+                            </p>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-alvida-orange font-bold text-lg">$24.99</span>
+                                <div class="flex items-center gap-1 text-xs text-amber-500">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="font-bold">4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Item 2 -->
+                    <div class="menu-item-card bg-white dark:bg-alvida-charcoal rounded-3xl overflow-hidden shadow-md hover:shadow-xl hover-lift transition duration-300"
+                        data-category="main">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80"
+                                alt="Truffle Pasta" class="w-full h-56 object-cover"
+                                onerror="this.src='https://placehold.co/600x400/121212/ffffff?text=Truffle+Pasta'">
+                            <button onclick="addToCart('Truffle Pasta', 18.99)"
+                                class="absolute top-4 right-4 bg-alvida-orange hover:bg-alvida-darkOrange text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition transform active:scale-95"
+                                aria-label="Add Truffle Pasta to Cart">
+                                <i class="fa-solid fa-plus text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg tracking-wide uppercase">TRUFFLE
+                                PASTA</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                                Linguine tossed in truffle cream sauce with hand-shaved Italian white parmesan.
+                            </p>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-alvida-orange font-bold text-lg">$18.99</span>
+                                <div class="flex items-center gap-1 text-xs text-amber-500">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="font-bold">4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Item 3 -->
+                    <div class="menu-item-card bg-white dark:bg-alvida-charcoal rounded-3xl overflow-hidden shadow-md hover:shadow-xl hover-lift transition duration-300"
+                        data-category="main">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&q=80"
+                                alt="Grilled Salmon" class="w-full h-56 object-cover"
+                                onerror="this.src='https://placehold.co/600x400/121212/ffffff?text=Grilled+Salmon'">
+                            <button onclick="addToCart('Grilled Salmon', 22.99)"
+                                class="absolute top-4 right-4 bg-alvida-orange hover:bg-alvida-darkOrange text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition transform active:scale-95"
+                                aria-label="Add Grilled Salmon to Cart">
+                                <i class="fa-solid fa-plus text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg tracking-wide uppercase">GRILLED
+                                SALMON</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                                Seasoned salmon grilled to perfection with fresh organic veggies and micro-cilantro.
+                            </p>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-alvida-orange font-bold text-lg">$22.99</span>
+                                <div class="flex items-center gap-1 text-xs text-amber-500">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="font-bold">5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Item 4 -->
+                    <div class="menu-item-card bg-white dark:bg-alvida-charcoal rounded-3xl overflow-hidden shadow-md hover:shadow-xl hover-lift transition duration-300"
+                        data-category="desserts">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"
+                                alt="Chocolate Lava Cake" class="w-full h-56 object-cover"
+                                onerror="this.src='https://placehold.co/600x400/121212/ffffff?text=Chocolate+Lava'">
+                            <button onclick="addToCart('Chocolate Lava Cake', 12.49)"
+                                class="absolute top-4 right-4 bg-alvida-orange hover:bg-alvida-darkOrange text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition transform active:scale-95"
+                                aria-label="Add Chocolate Lava Cake to Cart">
+                                <i class="fa-solid fa-plus text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg tracking-wide uppercase">
+                                CHOCOLATE LAVA</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                                Warm, decadent molten Belgian center, garnished with gold-leaf flakes.
+                            </p>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-alvida-orange font-bold text-lg">$12.49</span>
+                                <div class="flex items-center gap-1 text-xs text-amber-500">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="font-bold">4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="drinks" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase font-extrabold tracking-[0.25em] text-alvida-orange block mb-2">
+                    CRAFTED FOR EXECUTIVE PALATES
+                </span>
+                <h2 class="text-3xl font-extrabold font-sans text-gray-900 dark:text-white">
+                    Featured Liquid Gold
+                </h2>
+                <p class="text-gray-500 dark:text-gray-400 text-sm mt-3">
+                    Bespoke high-proof and custom non-alcoholic mixes engineered dynamically for VIP celebrations.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Drink 1 -->
+                <div
+                    class="bg-white dark:bg-alvida-deepGray rounded-3xl p-6 border border-gray-100 dark:border-gray-800 hover-lift transition duration-300">
+                    <div class="relative rounded-2xl overflow-hidden mb-6 aspect-video">
+                        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80"
+                            alt="The Alvida Sovereign Elixir" class="w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/600x400/ff5b00/ffffff?text=Alvida+Elixir'">
+                        <span
+                            class="absolute top-3 left-3 bg-alvida-orange text-white text-[10px] uppercase font-bold px-2 py-1 rounded">VIP
+                            FAVOURITE</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">The Sovereign Elixir</h3>
+                            <span class="text-alvida-orange font-black">$19.00</span>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Smoked botanical infusion, aged bourbon
+                            extract, dash of local honey & edible solid gold spray.</p>
+                        <button onclick="addToCart('The Sovereign Elixir', 19.00)"
+                            class="w-full border-2 border-dashed border-alvida-orange hover:bg-alvida-orange hover:text-white text-alvida-orange font-bold py-2 rounded-xl text-xs transition">
+                            Add to Selection
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Drink 2 -->
+                <div
+                    class="bg-white dark:bg-alvida-deepGray rounded-3xl p-6 border border-gray-100 dark:border-gray-800 hover-lift transition duration-300">
+                    <div class="relative rounded-2xl overflow-hidden mb-6 aspect-video">
+                        <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80"
+                            alt="Cabinet Mimosa Revamp" class="w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/600x400/121212/ffffff?text=Mimosa'">
+                        <span
+                            class="absolute top-3 left-3 bg-amber-500 text-white text-[10px] uppercase font-bold px-2 py-1 rounded">SIGNATURE</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Cabinet Mimosa</h3>
+                            <span class="text-alvida-orange font-black">$16.50</span>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Hand-pressed dynamic blood-oranges,
+                            champagne reduction float, served in frozen crystal ware.</p>
+                        <button onclick="addToCart('Cabinet Mimosa', 16.50)"
+                            class="w-full border-2 border-dashed border-alvida-orange hover:bg-alvida-orange hover:text-white text-alvida-orange font-bold py-2 rounded-xl text-xs transition">
+                            Add to Selection
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Drink 3 -->
+                <div
+                    class="bg-white dark:bg-alvida-deepGray rounded-3xl p-6 border border-gray-100 dark:border-gray-800 hover-lift transition duration-300">
+                    <div class="relative rounded-2xl overflow-hidden mb-6 aspect-video">
+                        <img src="https://images.unsplash.com/photo-1574085733277-851d9d856a3a?auto=format&fit=crop&w=600&q=80"
+                            alt="Sovereign Mocktail" class="w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/600x400/ff5b00/ffffff?text=Royal+Mocktail'">
+                        <span
+                            class="absolute top-3 left-3 bg-green-600 text-white text-[10px] uppercase font-bold px-2 py-1 rounded">NON-ALCOHOLIC</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Statehouse Mocktail</h3>
+                            <span class="text-alvida-orange font-black">$14.00</span>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Infused lavender syrup, pressed fresh lychee
+                            juice, pure spring mineral spray & fresh lime zest.</p>
+                        <button onclick="addToCart('Statehouse Mocktail', 14.00)"
+                            class="w-full border-2 border-dashed border-alvida-orange hover:bg-alvida-orange hover:text-white text-alvida-orange font-bold py-2 rounded-xl text-xs transition">
+                            Add to Selection
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div
+                class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-alvida-charcoal to-alvida-deepGray text-white p-8 md:p-16 shadow-2xl border border-gray-800">
+                <!-- Abstract glowing decor circles -->
+                <div class="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-alvida-orange/20 blur-3xl"></div>
+
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-8 space-y-4 text-center lg:text-left">
+                        <span class="text-xs uppercase font-extrabold tracking-widest text-alvida-orange">RESERVE SEAT /
+                            ORDER FOOD ONLINE</span>
+                        <h2 class="text-3xl md:text-4xl font-extrabold font-sans">
+                            Ready to Claim Your Cabinet Seats?
+                        </h2>
+                        <p class="text-gray-400 text-sm max-w-xl mx-auto lg:mx-0">
+                            Bookings for our main salon and statehood lounges fill up days in advance. Order online or
+                            submit your booking immediately to avoid waiting list routing.
+                        </p>
+                    </div>
+                    <div class="lg:col-span-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
+                        <button onclick="toggleReserveModal()"
+                            class="bg-alvida-orange hover:bg-alvida-darkOrange text-white font-bold py-4 px-8 rounded-xl transition duration-300 shadow-xl shadow-alvida-orange/25">
+                            Reserve Seat Now
+                        </button>
+                        <a href="#menu"
+                            class="bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-8 rounded-xl transition border border-white/20 text-center">
+                            Order Online
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="py-16 lg:py-24 bg-gray-50 dark:bg-alvida-deepGray transition duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs uppercase font-extrabold tracking-[0.25em] text-alvida-orange block mb-2">
+                        WALK INTO ALVIDA
+                    </span>
+                    <h2 class="text-3xl font-extrabold font-sans text-gray-900 dark:text-white">
+                        Elite Dining Ambience
+                    </h2>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-3">
+                        A dynamic sneak-peek inside our luxury main dining floors, VIP corridors, and chef laboratories.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Gallery Item 1 -->
+                    <div class="relative group rounded-3xl overflow-hidden shadow-md aspect-square cursor-pointer"
+                        onclick="openGalleryImage('https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80', 'The Executive VIP Parlour')">
+                        <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
+                            alt="Executive Lounge"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span
+                                class="text-xs font-semibold text-alvida-orange uppercase tracking-widest">AMBIECE</span>
+                            <h4 class="text-white font-bold text-lg mt-1">The Sovereign Lounge</h4>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 2 -->
+                    <div class="relative group rounded-3xl overflow-hidden shadow-md aspect-square cursor-pointer"
+                        onclick="openGalleryImage('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80', 'Molecular Culinary Prep')">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80"
+                            alt="Food Prep"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span class="text-xs font-semibold text-alvida-orange uppercase tracking-widest">CULINARY
+                                ART</span>
+                            <h4 class="text-white font-bold text-lg mt-1">Gourmet Food Presentation</h4>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 3 -->
+                    <div class="relative group rounded-3xl overflow-hidden shadow-md aspect-square cursor-pointer"
+                        onclick="openGalleryImage('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', 'Cabinet Meeting Main Salon')">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+                            alt="Main Salon"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                            <span
+                                class="text-xs font-semibold text-alvida-orange uppercase tracking-widest">SALON</span>
+                            <h4 class="text-white font-bold text-lg mt-1">Cabinet State Room</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+                <!-- Contact details & Map card -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-xs uppercase font-extrabold tracking-[0.25em] text-alvida-orange block mb-2">
+                            LOCATION & DIRECTIONS
+                        </span>
+                        <h2 class="text-3xl font-extrabold font-sans text-gray-900 dark:text-white">
+                            Visit Our Sovereign Location
+                        </h2>
+                    </div>
+
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                        Alvida is positioned adjacent to the State House, in the high-security elite diplomatic
+                        district. Standard diplomatic details are accommodated with secured underground parking ports.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-alvida-deepGray flex items-center justify-center text-alvida-orange text-lg">
+                                <i class="fa-solid fa-map-pin"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs text-gray-400 uppercase">ADDRESS</h4>
+                                <p class="text-sm text-gray-800 dark:text-white font-semibold">100 Government Boulevard,
+                                    State Capitol Suite 5</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-alvida-deepGray flex items-center justify-center text-alvida-orange text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs text-gray-400 uppercase">SECRETARIAT PHONELINE</h4>
+                                <p class="text-sm text-gray-800 dark:text-white font-semibold">+1 (555) ALVIDA-01</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-alvida-deepGray flex items-center justify-center text-alvida-orange text-lg">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs text-gray-400 uppercase">CABINET DINING HOURS</h4>
+                                <p class="text-sm text-gray-800 dark:text-white font-semibold">Daily: 12:00 PM – 11:30
+                                    PM (Security gates lock at 12:00 AM)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mock interactive beautifully customized Map visualization -->
+                    <div
+                        class="relative rounded-2xl overflow-hidden h-64 border border-gray-100 dark:border-gray-800 shadow-md">
+                        <!-- Custom designed Map placeholder vector styling -->
+                        <div
+                            class="absolute inset-0 bg-orange-50 dark:bg-alvida-charcoal flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fa-solid fa-map-location-dot text-4xl text-alvida-orange mb-3"></i>
+                            <h4 class="font-bold text-sm dark:text-white">Walk Into Alvida Today</h4>
+                            <p class="text-xs text-gray-400 mt-1">Follow the Map Navigation to Executive Experience.</p>
+                            <button onclick="window.open('https://maps.app.goo.gl/X16umrQqAPM3jNbT6')"
+                                class="mt-4 bg-white dark:bg-alvida-deepGray text-gray-700 dark:text-gray-300 hover:text-alvida-orange text-xs font-bold py-2 px-4 rounded-lg shadow border border-gray-200 dark:border-gray-800 transition">
+                                Open Google Navigation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fast message contact form -->
+                <div
+                    class="lg:col-span-7 bg-white dark:bg-alvida-deepGray rounded-3xl p-8 border border-gray-100 dark:border-gray-800 shadow-lg">
+                    <h3 class="text-xl font-bold font-serif text-gray-900 dark:text-white mb-2">Send Secure Inquiries
+                    </h3>
+                    <p class="text-xs text-gray-400 mb-6">Your queries go straight to the Executive Secretariat Office.
+                    </p>
+
+                    <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1">YOUR EXCELLENCY'S
+                                    NAME</label>
+                                <input required type="text"
+                                    class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white"
+                                    placeholder="Sen. Elizabeth Vance">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1">OFFICIAL EMAIL</label>
+                                <input required type="email"
+                                    class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white"
+                                    placeholder="vance.e@senate.gov">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1">SUBJECT / TOPIC</label>
+                            <input required type="text"
+                                class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white"
+                                placeholder="Private Press Briefing Lounge Booking">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1">MESSAGE DESCRIPTION</label>
+                            <textarea required
+                                class="w-full bg-gray-50 dark:bg-alvida-charcoal border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-alvida-orange dark:text-white h-32"
+                                placeholder="Detail any specific security routing requirements, diet guidelines, or VIP protocols needed..."></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-alvida-orange hover:bg-alvida-darkOrange text-white font-bold py-3.5 rounded-xl transition duration-300 shadow-lg shadow-alvida-orange/20">
+                            Dispatch Secure Message
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-alvida-charcoal text-gray-400 border-t border-gray-900 pt-16 pb-12 transition duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+
+                <!-- Branding info -->
+                <div class="space-y-4">
+                    <a href="#home" class="flex items-center gap-1.5">
+                        <img src="white_logo.png" alt="Alvida Logo" class="h-6">
+                    </a>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        The highest accredited luxury executive restaurant in the statehouse district. Catering to local
+                        legislative bodies, ambassadors, and high-profile citizens.
+                    </p>
+                    <div class="flex gap-4 pt-2">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-alvida-orange text-white flex items-center justify-center transition"
+                            aria-label="Facebook Link"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-alvida-orange text-white flex items-center justify-center transition"
+                            aria-label="Instagram Link"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <!-- <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-alvida-orange text-white flex items-center justify-center transition" aria-label="Twitter Link"><i class="fa-brands fa-x-twitter text-sm"></i></a> -->
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-alvida-orange text-white flex items-center justify-center transition"
+                            aria-label="LinkedIn Link"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                    </div>
+                </div>
+
+                <!-- Navigation Quick links -->
+                <div>
+                    <h4 class="font-bold text-white text-sm tracking-wider uppercase mb-4">Quick Selections</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#home" class="hover:text-alvida-orange transition">Home</a></li>
+                        <li><a href="#executive" class="hover:text-alvida-orange transition">Executive Lounge</a></li>
+                        <li><a href="#menu" class="hover:text-alvida-orange transition">Menu List</a></li>
+                        <li><a href="#drinks" class="hover:text-alvida-orange transition">Featured Drinks</a></li>
+                        <li><a href="#gallery" class="hover:text-alvida-orange transition">Walk Into Alvida</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Help desk -->
+                <div>
+                    <h4 class="font-bold text-white text-sm tracking-wider uppercase mb-4">Secretariat Help</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#reserve" onclick="toggleReserveModal()"
+                                class="hover:text-alvida-orange transition">Table Bookings</a></li>
+                        <li><a href="#menu" onclick="toggleCart()" class="hover:text-alvida-orange transition">Online
+                                Orders</a></li>
+                        <li><a href="#contact" class="hover:text-alvida-orange transition">Press & media Desk</a></li>
+                        <li><a href="#contact" class="hover:text-alvida-orange transition">Diplomatic Security
+                                Office</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter & Creds -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-white text-sm tracking-wider uppercase mb-4">The Sovereign Newsletter</h4>
+                    <p class="text-xs text-gray-500">Subscribe for custom gourmet news and reservations alerts.</p>
+                    <form onsubmit="handleSubscribeSubmit(event)" class="flex gap-2">
+                        <input required type="email"
+                            class="bg-gray-800 text-xs text-white rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-1 focus:ring-alvida-orange"
+                            placeholder="governor@state.gov">
+                        <button type="submit"
+                            class="bg-alvida-orange hover:bg-alvida-darkOrange text-white text-xs font-bold px-4 py-2 rounded-lg transition shrink-0">Join</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Bottom elements & Copyrights -->
+            <div
+                class="pt-8 border-t border-gray-900 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-600 gap-4">
+                <p>&copy; 2026 Alvida Fine Art Culinary. All Sovereigns Reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:underline">Diplomatic Security Guidelines</a>
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 lg:hidden w-[90%] max-w-sm">
+        <div
+            class="relative bg-white/95 dark:bg-alvida-deepGray/95 backdrop-blur-md rounded-3xl py-3 px-6 shadow-2xl border border-gray-100 dark:border-gray-800 flex items-center justify-between">
+
+            <!-- Home Option -->
+            <a href="#home" class="flex flex-col items-center gap-1 group text-alvida-orange" id="mob-home-btn"
+                onclick="setActiveMobileTab('home')">
+                <i class="fa-solid fa-house text-lg transition duration-200 group-hover:scale-110"></i>
+                <span class="text-[10px] font-bold tracking-wider">HOME</span>
+            </a>
+
+            <!-- Menu Option -->
+            <a href="#menu"
+                class="flex flex-col items-center gap-1 group text-gray-400 dark:text-gray-500 hover:text-alvida-orange transition"
+                id="mob-menu-btn" onclick="setActiveMobileTab('menu')">
+                <i class="fa-solid fa-book-open text-lg transition duration-200 group-hover:scale-110"></i>
+                <span class="text-[10px] font-bold tracking-wider">MENU</span>
+            </a>
+
+            <!-- Central RESERVE action styled with the gorgeous circular hover outline as wireframe mobile layout -->
+            <div class="absolute -top-7 left-1/2 -translate-x-1/2">
+                <button onclick="toggleReserveModal()"
+                    class="w-16 h-16 rounded-full bg-alvida-orange text-white flex items-center justify-center shadow-lg shadow-alvida-orange/40 hover:bg-alvida-darkOrange transition border-4 border-white dark:border-alvida-charcoal relative"
+                    aria-label="Reserve Table">
+                    <i class="fa-solid fa-utensils text-xl"></i>
+                    <!-- Pulse glow outer circle -->
+                    <span
+                        class="absolute -inset-1 rounded-full border-2 border-alvida-orange/50 animate-ping opacity-75"></span>
+                </button>
+                <div class="text-center mt-1">
+                    <span class="text-[9px] font-black tracking-wider text-alvida-orange">RESERVE</span>
+                </div>
+            </div>
+
+            <!-- Empty spacer to pad the floating center button -->
+            <div class="w-12"></div>
+
+            <!-- Order Option -->
+            <button onclick="toggleCart()"
+                class="flex flex-col items-center gap-1 group text-gray-400 dark:text-gray-500 hover:text-alvida-orange transition"
+                id="mob-order-btn">
+                <i class="fa-solid fa-basket-shopping text-lg transition duration-200 group-hover:scale-110"></i>
+                <span class="text-[10px] font-bold tracking-wider">ORDER</span>
+            </button>
+
+            <!-- Account Option -->
+            <button onclick="openSignIn()"
+                class="flex flex-col items-center gap-1 group text-gray-400 dark:text-gray-500 hover:text-alvida-orange transition"
+                id="mob-account-btn">
+                <a href="profile.html"><i class="fa-solid fa-user-tie text-lg transition duration-200 group-hover:scale-110"></i></a>
+                <span class="text-[10px] font-bold tracking-wider">ACCOUNT</span>
+            </button>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCY-lkzR0_aenIhBj6mBZn5dlFbSZq2gMM",
+            authDomain: "alvida-restaurant.firebaseapp.com",
+            projectId: "alvida-restaurant",
+            storageBucket: "alvida-restaurant.firebasestorage.app",
+            messagingSenderId: "865829799676",
+            appId: "1:865829799676:web:4109088cd6bb0f27673979",
+            measurementId: "G-SYF4YFKQZS"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+
+
+
+
+    <script>
+        // Internal cart tracking state loaded with some default luxury items as seen in mobile image
+        let state = {
+            cart: [
+                { name: 'Alvida Mixed Grill', price: 24.99, quantity: 1 },
+                { name: 'Grilled Salmon', price: 22.99, quantity: 1 }
+            ],
+            theme: 'light'
+        };
+
+        // Window load initializations
+        window.onload = function () {
+            // Restore previous user theme preference or set default light
+            if (localStorage.getItem('alvida-theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                state.theme = 'dark';
+                updateThemeToggleIcon();
+            } else {
+                document.documentElement.classList.remove('dark');
+                state.theme = 'light';
+                updateThemeToggleIcon();
+            }
+            renderCart();
+        }
+
+        // Theme switching handler (Light/Dark Switch toggle)
+        function toggleTheme() {
+            if (state.theme === 'light') {
+                document.documentElement.classList.add('dark');
+                state.theme = 'dark';
+                localStorage.setItem('alvida-theme', 'dark');
+                showToast("Luxury Dark Mode Engaged. Welcome, Sovereign.");
+            } else {
+                document.documentElement.classList.remove('dark');
+                state.theme = 'light';
+                localStorage.setItem('alvida-theme', 'light');
+                showToast("Crisp Executive Light Mode Engaged.");
+            }
+            updateThemeToggleIcon();
+        }
+
+        function updateThemeToggleIcon() {
+            const icon = document.getElementById('themeIcon');
+            if (state.theme === 'dark') {
+                icon.className = 'fa-solid fa-sun text-lg';
+            } else {
+                icon.className = 'fa-solid fa-moon text-lg';
+            }
+        }
+
+        // Cart Drawer Interactivity
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            if (drawer.classList.contains('opacity-0')) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                drawer.querySelector('div').classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+                drawer.querySelector('div').classList.add('translate-x-full');
+            }
+        }
+
+        // Add Food Items to Selection Drawer
+        function addToCart(name, price) {
+            const existing = state.cart.find(item => item.name === name);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                state.cart.push({ name, price, quantity: 1 });
+            }
+            renderCart();
+            showToast(`${name} added to executive selection!`);
+        }
+
+        // Change quantity helpers inside Cart Drawer
+        function updateQty(name, amount) {
+            const item = state.cart.find(item => item.name === name);
+            if (item) {
+                item.quantity += amount;
+                if (item.quantity <= 0) {
+                    state.cart = state.cart.filter(i => i.name !== name);
+                }
+            }
+            renderCart();
+        }
+
+        // Render Cart items dynamically and compute checkout badge count
+        function renderCart() {
+            const container = document.getElementById('cartItemsList');
+            const totalSumElement = document.getElementById('cartTotalSum');
+            const cartCountBadge = document.getElementById('cartCountBadge');
+
+            if (state.cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400 dark:text-gray-500">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 block"></i>
+                        <p>No delicious executive items selected yet.</p>
+                    </div>
+                `;
+                totalSumElement.innerText = '$0.00';
+                cartCountBadge.innerText = '0';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            let totalItems = 0;
+
+            state.cart.forEach(item => {
+                const sub = item.price * item.quantity;
+                total += sub;
+                totalItems += item.quantity;
+
+                html += `
+                    <div class="flex items-center gap-4 bg-gray-50 dark:bg-alvida-charcoal p-4 rounded-2xl border border-gray-100 dark:border-gray-800 transition">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">${item.name}</h4>
+                            <p class="text-xs text-alvida-orange font-bold mt-0.5">$${item.price.toFixed(2)} each</p>
+                        </div>
+                        <div class="flex items-center gap-2 bg-white dark:bg-alvida-deepGray border border-gray-100 dark:border-gray-800 rounded-lg p-1 shadow-sm">
+                            <button onclick="updateQty('${item.name}', -1)" class="w-6 h-6 rounded flex items-center justify-center text-xs font-bold text-gray-500 hover:text-alvida-orange transition">-</button>
+                            <span class="text-xs font-bold px-1 dark:text-white">${item.quantity}</span>
+                            <button onclick="updateQty('${item.name}', 1)" class="w-6 h-6 rounded flex items-center justify-center text-xs font-bold text-gray-500 hover:text-alvida-orange transition">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalSumElement.innerText = `$${total.toFixed(2)}`;
+            cartCountBadge.innerText = totalItems;
+        }
+
+        // Checkout logic
+        function checkoutOrder() {
+            if (state.cart.length === 0) {
+                showToast("Your selection drawer is empty.", true);
+                return;
+            }
+            showToast("Order dispatched to the VIP chef desk. Prepping immediately!");
+            state.cart = [];
+            renderCart();
+            toggleCart();
+        }
+
+        // Reservation Modal Open/Close Controls
+        function toggleReserveModal() {
+            const modal = document.getElementById('reserveModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.querySelector('.bg-white').classList.remove('scale-95');
+                    modal.querySelector('.bg-white').classList.add('scale-100');
+                }, 50);
+            } else {
+                modal.querySelector('.bg-white').classList.remove('scale-100');
+                modal.querySelector('.bg-white').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // handle reservation form submit
+        function handleReservationSubmit(event) {
+            event.preventDefault();
+            toggleReserveModal();
+            showToast("Table reserved successfully! Check email/SMS for security entry passcode.");
+        }
+
+        // handle contact form dispatch
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            showToast("Secure message sent. The Secretariat office will reach out shortly.");
+            event.target.reset();
+        }
+
+        // handle newsletter subscribe
+        function handleSubscribeSubmit(event) {
+            event.preventDefault();
+            showToast("Joined Sovereign newsletter circle!");
+            event.target.reset();
+        }
+
+        // Custom animation triggers for liquid menu pour (Liquid being poured into a glass menu cover)
+        function triggerMobileNavMenu() {
+            const overlay = document.getElementById('pourNavMenu');
+            const textMenu = overlay.querySelector('.relative.z-10');
+
+            if (overlay.classList.contains('active')) {
+                textMenu.classList.add('opacity-0', 'translate-y-8');
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                }, 400);
+            } else {
+                overlay.classList.add('active');
+                setTimeout(() => {
+                    textMenu.classList.remove('opacity-0', 'translate-y-8');
+                }, 600);
+            }
+        }
+
+        // Cinematic video story logic
+        function toggleStoryModal() {
+            const modal = document.getElementById('storyModal');
+            const progress = document.getElementById('videoProgress');
+
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    progress.style.width = '100%';
+                }, 100);
+            } else {
+                modal.classList.add('hidden');
+                progress.style.width = '0%';
+            }
+        }
+
+        // Dynamic Menu Category Filters
+        function filterMenu(category) {
+            const cards = document.querySelectorAll('.menu-item-card');
+            const btns = document.querySelectorAll('.menu-tab-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('active', 'bg-alvida-orange', 'text-white');
+                btn.classList.add('bg-white', 'dark:bg-alvida-charcoal', 'text-gray-600', 'dark:text-gray-300');
+            });
+
+            const activeBtn = document.getElementById(`tab-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'dark:bg-alvida-charcoal', 'text-gray-600', 'dark:text-gray-300');
+                activeBtn.classList.add('active', 'bg-alvida-orange', 'text-white');
+            }
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Open Lightbox gallery images nicely
+        function openGalleryImage(url, title) {
+            showToast(`Viewing Ambience: ${title}`);
+        }
+
+        // Mock Sign-in / Access controller
+        function openSignIn() {
+            showToast("Directing to Cabinet VIP sign-in portal...");
+        }
+
+        // Mobile active navigation highlights
+        function setActiveMobileTab(tab) {
+            const btnHome = document.getElementById('mob-home-btn');
+            const btnMenu = document.getElementById('mob-menu-btn');
+
+            btnHome.className = "flex flex-col items-center gap-1 group text-gray-400 dark:text-gray-500 hover:text-alvida-orange transition";
+            btnMenu.className = "flex flex-col items-center gap-1 group text-gray-400 dark:text-gray-500 hover:text-alvida-orange transition";
+
+            if (tab === 'home') {
+                btnHome.className = "flex flex-col items-center gap-1 group text-alvida-orange";
+            } else if (tab === 'menu') {
+                btnMenu.className = "flex flex-col items-center gap-1 group text-alvida-orange";
+            }
+        }
+
+        // Dynamic Toast Notifications helper (No alert dialogs allowed!)
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            toast.className = `flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border text-sm font-bold transition duration-300 transform translate-y-4 opacity-0 pointer-events-auto max-w-sm ${isError
+                ? 'bg-red-500 border-red-600 text-white'
+                : 'bg-white dark:bg-alvida-deepGray border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white'
+                }`;
+
+            toast.innerHTML = `
+                <i class="fa-solid ${isError ? 'fa-triangle-exclamation' : 'fa-circle-check text-alvida-orange'} text-lg"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 50);
+
+            // Animate Out
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3500);
+        }
+    </script>
+</body>
+
+</html>

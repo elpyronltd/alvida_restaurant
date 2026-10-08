@@ -1,0 +1,118 @@
+We're building a restaurant website in PHP that would allow users to place orders for foods served within the restaurant. 
+
+Let's start with the sql for login (the "users" table).
+
+The name of the restaurant is "jenda_restaurant_db".
+
+We have admins, customers, cooks and delivery agents as users of the app.
+
+We would have foods, drinks, users, delivery, home_page, gallery, etc  as tables within our database.
+
+The foods table would store foods including food name, food category, food price, food picture (up to three pictures), food desciption (optional).
+
+The drinks table would look similar to the foods table, just that it would store drinks.
+
+The users table would have user name, user role (admin, customer, chef), user location, user email (optional), user contact, user status (executive, standard, etc), password, data_created (for date joined), profile picture. 
+
+LET'S START WITH THE DATABASE SQL
+
+
+
+
+
+
+
+
+
+include/db.php
+Successful customer login should lead to profile.php
+Successful chef login should lead to chef.php
+Successful admin login should lead to manage_restaurant_2v6.php
+
+
+
+
+
+
+
+
+login.php
+It should look modern. 
+The same login.php should handle both login and signup.
+The signup should require contact, password, password confirmation, email (optional), locatoin, agreement to terms and conditions of Jenda Restaurant, name. 
+Every default login should have "customer" role.
+Admins and chefs would be set manually from the database and code.
+
+We would also be using Google and Apple Signin/signup.
+Kindly allow for that. User's should still be required to enter their contact numbers and location even if they sign in with Google or Apple.
+
+BELOW IS MY FIREBASE SCRIPT. KINDLY USE IT TO GUIDE YOUR BUILDING OF THE LOGIN.PHP FILE.
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCTPY28gYNHV6TS_YVafSGneXvTvb7ryMA",
+    authDomain: "jendarestaurant.firebaseapp.com",
+    projectId: "jendarestaurant",
+    storageBucket: "jendarestaurant.firebasestorage.app",
+    messagingSenderId: "518545519468",
+    appId: "1:518545519468:web:cc09a476b011f1a379b949",
+    measurementId: "G-RCLGV4BLMS"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+ALSO ALLOW FOR SIGN IN WITH POP UP. 
+IF USERS LOGIN WITH GOOGLE OR APPLE, THEIR PROFILE PICTURES SHOULD SHOW IN THE profile.php, chef.php and admin.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+profile.php
+
+It should display the user's profile picture from the Google Signin.
+
+It should be in colors of #ff7e00, chacoal black, and white.
+
+It should display customer's detials including name, email, contact, location, allow for password update, order history, and many other functionalities a restaurant customer should have on their profile.
+
+SO I think we would need the profile.php and the sql for the order_history table.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

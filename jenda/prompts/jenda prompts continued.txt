@@ -1,0 +1,75 @@
+I'm building a restaurant platform that would allow users to place food others, drink orders, reserve tables, etc.
+I'm using PHP. The name of the database is "jenda_restaurant_db". 
+
+Let's build the admin page (manage_restaurant_2v6.php)
+
+
+
+
+
+The adin page should have 6 tabs: Live Dashboard, Foods, Drinks, Order Dispatch, Chef Activities & Security. The uploaded picture is the structure of the "food" and "drinks" tables.
+The Live Dashboard tab should should be a dashbaord for him to see total number food varieties, total number of drink options, total number of orders, total orders today, total number of deliveries, total deliveries today.
+
+The food registry should allow him to see the differnt foods available in the tatabase. The foods should be sorted according to available categories.
+
+The drink registry should allow him to see the differnt drinks available in the tatabase. The drinks should be sorted according to available categories.    
+
+The admin too should be to see current orders. He should see the orders based on their group: preparing, ready, out_for_delivery, delivered, cancelled.  
+The admin would only oversee, he would not be able to change the status of the orders. The chef would be the one to change the status of the orders.
+
+
+The admin should be able to oversee chefs and their activities. In the Chef's Activities tab, he should be able to see the accounts of all the chefs, the number of orders fulfilled in a day, in a month and in a year.
+Admin should be able to update password as well as suspend a chef's account if need be.
+
+The structure of the orders table too is uploaded.
+
+Kindly also write the sql to update the "orders" table, to allow for "fulfilled_by" column, so we can know which chef fulfilled what order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+chef.php
+The chef should be able to add, remove, update, foods and drinks. The uploaded picture is the structure of the "food" and "drinks" tables.
+When uploading food/drink, the admin should be able to set price, add name, upload up to three pictures, description (optional)
+He should be able to mark oders as either preparing, ready, out_for_delivery, delivered, cancelled.
+Chef's too should be able to see the orders, mark orders as either preparing, ready, out_for_delivery, delivered, cancelled. The chef should be able to set an order as fulfilled by him/her.The chef too should be able to see booked reservations and confirm or deny the rservation requests/booking.
+
+
+
+
+
+
+
+
+
+
+index.php
+
+Here, it should be a clean home page portraying the executive standard of the restaurant. It should look 100% exactly like the uploaded picture.
+It should have a hero section, popular dishes sections (with link to view all dishes), popular drinks section (with link to view all drinks), reservation section,CTA banner, gallery section, "Walk to Jenda" (Picture of the place with map), and footer. The footer should have quick links, contact, and rating linked to Google Maps Rating.
+
+The dishes, and drinks should be pulled from the database and displayed in their respective categories.
+
+In desktops, it should look like the desktop picture, and look like the mobile picture in mobile phones.
+
+Instead of using the picture you uploaded, let me create a custom background image for the hero section. I want it to look exactly like the picture. 
+
+Again, the foods link should lead to food-menu.php
+The drinks link should lead to drinks.php
+Clicking on the "Add" button should load order.php, order_processing.php and cart.php so users can actually add food to their order carts and place actual orders.
+
+Again, the index.php should check if the user is logged in and display the user's name, profile picture and email in place of the "login button."
+
+The index.php should also allow for login using pop us.
+
+The toggle menu should animate in mobile screens.

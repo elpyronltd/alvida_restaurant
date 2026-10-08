@@ -1,0 +1,142 @@
+-- ====================================================================
+-- Database Creation for Jenda Restaurant
+-- ====================================================================
+CREATE DATABASE IF NOT EXISTS jenda_restaurant_db 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
+
+USE jenda_restaurant_db;
+
+-- ====================================================================
+-- 1. Users Table
+-- Supports roles: admin, customer, cook, and delivery_agent.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(150) NULL DEFAULT NULL,
+    password VARCHAR(255) NOT NULL, -- Sized for modern secure password hashing (e.g., password_hash)
+    role ENUM('admin', 'customer', 'cook', 'delivery_agent') NOT NULL DEFAULT 'customer',
+    location TEXT NOT NULL, -- Location details of the user
+    contact VARCHAR(20) NOT NULL, -- Phone/contact number
+    status ENUM('executive', 'standard', 'premium') DEFAULT 'standard', -- Membership/User classification
+    profile_picture VARCHAR(255) NULL DEFAULT 'uploads/profiles/default.png', -- Filepath for profile pic
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 2. Foods Table
+-- Stores food items, allowing up to three pictures.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS foods (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    category VARCHAR(100) NOT NULL, -- e.g., Appetizer, Main Course, Dessert
+    price DECIMAL(10, 2) NOT NULL,
+    picture_1 VARCHAR(255) NOT NULL, -- At least one primary image is mandatory
+    picture_2 VARCHAR(255) NULL DEFAULT NULL,
+    picture_3 VARCHAR(255) NULL DEFAULT NULL,
+    description TEXT NULL DEFAULT NULL, -- Optional description
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 3. Drinks Table
+-- Structured similarly to foods, dedicated to beverages.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS drinks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    category VARCHAR(100) NOT NULL, -- e.g., Soft Drinks, Alcoholic, Mocktails, Juices
+    price DECIMAL(10, 2) NOT NULL,
+    picture_1 VARCHAR(255) NOT NULL, -- At least one primary image is mandatory
+    picture_2 VARCHAR(255) NULL DEFAULT NULL,
+    picture_3 VARCHAR(255) NULL DEFAULT NULL,
+    description TEXT NULL DEFAULT NULL, -- Optional description
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 4. Orders Table
+-- Tracks customer orders, their statuses, and totals.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_status ENUM('pending', 'preparing', 'ready', 'out_for_delivery', 'delivered', 'cancelled') DEFAULT 'pending',
+    payment_status ENUM('unpaid', 'paid', 'refunded') DEFAULT 'unpaid',
+    payment_method ENUM('cash_on_delivery', 'card', 'mobile_money') NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    delivery_address TEXT NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 5. Order Items Table (Junction Table)
+-- Connects orders to specific foods and/or drinks with quantities.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    food_id INT NULL DEFAULT NULL, -- Nullable if item is a drink
+    drink_id INT NULL DEFAULT NULL, -- Nullable if item is a food
+    quantity INT NOT NULL DEFAULT 1,
+    unit_price DECIMAL(10, 2) NOT NULL, -- Captures price at the moment of order placement
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (food_id) REFERENCES foods(id) ON DELETE SET NULL,
+    FOREIGN KEY (drink_id) REFERENCES drinks(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 6. Delivery Table
+-- Manages delivery assignments for delivery agents.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS delivery (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL UNIQUE,
+    agent_id INT NOT NULL,
+    delivery_status ENUM('assigned', 'on_the_way', 'delivered', 'failed') DEFAULT 'assigned',
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    delivered_at TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (agent_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 7. Gallery Table
+-- Dynamic gallery uploads for showcase.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS gallery (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_url VARCHAR(255) NOT NULL,
+    caption VARCHAR(255) NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- 8. Home Page Table
+-- Key-value configurations for easy back-office updates to home layout.
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS home_page (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    section_name VARCHAR(100) NOT NULL UNIQUE, -- e.g., 'hero_banner', 'welcome_text', 'contact_info'
+    title VARCHAR(255) NOT NULL,
+    content TEXT NULL,
+    banner_image VARCHAR(255) NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- Insert Sample Data for Testing
+-- ====================================================================
+
+-- Insert a default Administrator (Password hash is 'admin123' using bcrypt)
+INSERT INTO users (username, email, password, role, location, contact, status) 
+VALUES ('admin_jenda', 'admin@jenda.com', '$2y$10$o9G.Tf6h0oRym8O.BvX2S.QeKk.1R9S/n0nJ1y.E7s4g9Sj4K/K1e', 'admin', 'Restaurant Headquarters', '+1234567890', 'executive');
+
+-- Insert a default Cook / Chef (Password hash is 'chef123' using bcrypt)
+INSERT INTO users (username, email, password, role, location, contact, status) 
+VALUES ('chef_kwame', 'kwame@jenda.com', '$2y$10$T8Z65vLCO9yR0sW1p9m5re7P7Q/oFf6bXo0N6mOq1Xm9N1sA6q3Bq', 'cook', 'Kitchen Station 1', '+1234567891', 'standard');
